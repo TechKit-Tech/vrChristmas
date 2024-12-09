@@ -1,74 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+        <script>
+            AFRAME.registerComponent('videohandler', {
+                init: function () {
+                    var marker = this.el;
+                    this.vid = document.querySelector("#vid");
 
-<head>
-    <meta charset="UTF-8">
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar-nft.js"></script> -->
+                    marker.addEventListener('markerFound', function () {
+                        this.toggle = true;
+                        this.vid.play();
+                    }.bind(this));
 
-    <script type='text/javascript'
-        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
-    <script
-        src="https://cdn.jsdelivr.net/gh/c-frame/aframe-particle-system-component@1.2.0/dist/aframe-particle-system-component.min.js"></script>
+                    marker.addEventListener('markerLost', function () {
+                        this.toggle = false;
+                        this.vid.pause();
+                    }.bind(this));
+                },
+            });
+        </script>
+    </head>
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/record.js"></script>
-</head>
+    <body style="margin: 0; overflow: hidden;">
+        <a-scene
+            vr-mode-ui="enabled: false"
+            loading-screen="enabled: false;"
+            arjs='sourceType: webcam; debugUIEnabled: false;'
+            id="scene"
+            embedded
+            gesture-detector
+        >
+            <a-assets>
+                <video
+                    id="vid"
+                    src="assets/asset.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+            </a-assets>
 
-<body>
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/marker.patt"
+                videohandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="markerA"
+            >
+                <a-video
+                    src="#vid"
+                    scale="1 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
 
-    <div style="position: fixed;left: 20%;right: 20%;text-align: center;z-index: 9999">
-        <button id="start" contenteditable="false">Start Canvas Recording</button>
-        <button id="stop" disabled contenteditable="false">Stop</button>
-    </div>
-    <script src="https://www.webrtc-experiment.com/screenshot.js"></script>
-    <script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>
-    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-
-    <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; precision: medium;" embedded
-        arjs="sourceWidth:1920; sourceHeight:1080; displayWidth: 1920; displayHeight: 1080; trackingMethod: best; sourceType: webcam;debugUIEnabled: false;">
-        <!-- <a-recorder recorder="recording.webm"></a-recorder> -->
-        <!-- <a-nft type="nft" url="./tracker/eva-air-thumb" smooth="true" smoothCount="10" smoothTolerance=".01"
-            smoothThreshold="5">
-            <a-box scale="5 5 5" position="50 150 0"></a-box>
-            <a-entity position="0 2.25 -15"
-                particle-system="preset: snow; randomise: true; particleCount: 2000; size: 4; dragValue: 1"></a-entity>
-        </a-nft>
-        <a-entity camera></a-entity> -->
-
-
-        <!-- <a-camera position="0 5 8" fov="50" touchEnabled="false" wasd-controls-enabled="false"
-            look-controls-enabled="false" touchEnabled="false"></a-camera> -->
-
-
-
-        <a-marker type="pattern" url="https://cdn.glitch.global/6f7ac8d4-ec94-4463-a6ca-7f8241c21f88/pattern-eva-air-thumb.patt?v=1733726562514">
-            <a-box scale="0.8 0.5 0.2" position="0 0 0"></a-box>
-        </a-marker>
-
-        <a-camera-static>
-
-    </a-scene>
-
-    <!-- <button class="btn_primary" id="btnRecord">test</button> -->
-
-    <script>
-        window.addEventListener("arjs-nft-loaded", (event) => {
-            // Hide loading overlay
-        });
-        AFRAME.registerComponent('vr-mode-ui-if-headset', {
-            dependencies: ['vr-mode-ui'],
-            init: function () {
-                if (!AFRAME.utils.device.checkHeadsetConnected()) {
-                    this.el.setAttribute('vr-mode-ui', 'enabled', false);
-                }
-            }
-        })
-    </script>
-
-</body>
-
+            <a-entity camera></a-entity>
+        </a-scene>
+    </body>
 </html>
