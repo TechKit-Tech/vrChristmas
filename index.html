@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar-nft.js"></script>
+    <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar-nft.js"></script> -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
     <script type='text/javascript'
         src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
     <script
@@ -30,28 +31,30 @@
     <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; precision: medium;" embedded
         arjs="sourceWidth:1920; sourceHeight:1080; displayWidth: 1920; displayHeight: 1080; trackingMethod: best; sourceType: webcam;debugUIEnabled: false;">
         <!-- <a-recorder recorder="recording.webm"></a-recorder> -->
-        <a-nft type="nft" url="./vrChristmas/tree/main/tracker/eva-air-thumb" smooth="true" smoothCount="10"
-            smoothTolerance=".01" smoothThreshold="5">
-            <!-- as a child of the a-nft entity, you can define the content to show. here's a GLTF model entity -->
-            <a-entity gltf-model="<path-to-your-model>" scale="5 5 5" position="50 150 0">
-            </a-entity>
+        <!-- <a-nft type="nft" url="./tracker/eva-air-thumb" smooth="true" smoothCount="10" smoothTolerance=".01"
+            smoothThreshold="5">
+            <a-box scale="5 5 5" position="50 150 0"></a-box>
             <a-entity position="0 2.25 -15"
                 particle-system="preset: snow; randomise: true; particleCount: 2000; size: 4; dragValue: 1"></a-entity>
         </a-nft>
-        <!-- static camera that moves according to the device movemenents -->
-        <a-entity camera></a-entity>
+        <a-entity camera></a-entity> -->
 
 
         <!-- <a-camera position="0 5 8" fov="50" touchEnabled="false" wasd-controls-enabled="false"
             look-controls-enabled="false" touchEnabled="false"></a-camera> -->
 
 
+
+        <a-marker type="pattern" url="./pattern-eva-air-thump.patt" smooth="true"></a-marker>
+
     </a-scene>
 
     <!-- <button class="btn_primary" id="btnRecord">test</button> -->
 
     <script>
-
+        window.addEventListener("arjs-nft-loaded", (event) => {
+            // Hide loading overlay
+        });
         AFRAME.registerComponent('vr-mode-ui-if-headset', {
             dependencies: ['vr-mode-ui'],
             init: function () {
