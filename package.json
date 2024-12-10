@@ -1,0 +1,18 @@
+{
+  "name": "angkor_world",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  },
+  "dependencies": {
+    "@c-frame/aframe-physics-system": "^4.2.2",
+    "aframe-physics-system": "^4.0.2"
+  }
+}

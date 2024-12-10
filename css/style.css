@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+}
+
+/* CSS files add styling rules to your content */
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+button {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  bottom: 5%;
+  left: calc(50% - 50px);
+  /* top: calc(50% - 300px);
+  left: calc(50% - 50px); */
+  background-color: white;
+  z-index: 9999;
+  text-align: center;
+  color: black;
+}
+
+#startBtn {
+  left: calc(50% - 200px);
+}
+
+#stopBtn {
+  left: calc(50%);
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
